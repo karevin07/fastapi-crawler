@@ -4,7 +4,7 @@
 
 - [crawler](./crawler)
     - A web crawler, scraping data from [591](https://rent.591.com.tw/)
-- [fastapi](./fastapi)
+- [fastapi](./app)
     - A RESTful api use to query house data from `MongoDB`
 
 ## Installation
