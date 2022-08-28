@@ -6,13 +6,13 @@ from bs4 import BeautifulSoup
 from mongo import insert_item, get_client, get_item_info, update_item
 
 city_url = {
-    "taipei": "https://rent.591.com.tw/?kind=0&region=1&",
-    "new_taipei": "https://rent.591.com.tw/?kind=0&region=3"
+    "taipei": "https://rent.591.com.tw/?kind=0&regionid=1",
+    "new_taipei": "https://rent.591.com.tw/?kind=0&regionid=3"
 }
 
 city_api = {
-    "taipei": "https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&kind=0&region=1",
-    "new_taipei": "https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&kind=0&region=3"
+    "taipei": "https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&kind=0&regionid=1",
+    "new_taipei": "https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&kind=0&regionid=3"
 }
 
 headers = {
