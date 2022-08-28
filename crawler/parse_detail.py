@@ -43,28 +43,28 @@ def parse_detail(post_id, json_data):
     item_detail["post_id"] = post_id
     item_detail["title"] = json_data["title"]
     for breadcrumb in json_data["breadcrumb"]:
-        item_detail[breadcrumb["query"]] = breadcrumb["id"]
-        item_detail[f'{breadcrumb["query"]}_id'] = breadcrumb["name"]
+        item_detail[f'{breadcrumb["query"]}_id'] = breadcrumb["id"]
+        item_detail[breadcrumb["query"]] = breadcrumb["name"]
     for info in json_data["info"]:
         item_detail[info["key"]] = info["value"]
     item_detail["address"] = json_data["positionRound"]["address"]
     item_detail["role_name"] = json_data["linkInfo"]["roleName"]
-    item_detail["role"] = json_data["linkInfo"]["role"]  ## 屋主：1 代理人: 2 仲介:3
+    item_detail["role"] = json_data["linkInfo"]["role"]  # 屋主：1 代理人: 2 仲介:3
     item_detail["name"] = json_data["linkInfo"]["name"].replace(item_detail["role_name"], "").replace(": ", "").strip()
     item_detail["mobile"] = json_data["linkInfo"]["mobile"].replace("-", "")
     item_detail["price"] = int(json_data["price"].replace(",", ""))
-    if item_detail["name"].endswith("先生"):
-        item_detail["owner"] = 1
+    if item_detail["name"].endswith("先生"):  # 1: male, 2: female
+        item_detail["owner_gender"] = 1
     elif item_detail["name"].endswith("小姐"):
-        item_detail["owner"] = 2
+        item_detail["owner_gender"] = 2
     else:
-        item_detail["owner"] = 0
+        item_detail["owner_gender"] = 0
 
     try:
         house_rule = json_data["service"]["rule"]
     except:
         house_rule = ""
-    if "此房屋男女皆可租住" in house_rule:  ##0: other, 1: male ,2: female, 3: male and female
+    if "此房屋男女皆可租住" in house_rule:  # 0: other, 1: male ,2: female, 3: male and female
         item_detail["allow_gender"] = 3
     elif "此房屋限女生租住" in house_rule:
         item_detail["allow_gender"] = 2
