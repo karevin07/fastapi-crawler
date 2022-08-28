@@ -1,6 +1,6 @@
 # fastapi-crawler
 
-`fastapi-crawler` is a Python fastapi application and web crawler server
+`fastapi-crawler` is a Python fastapi application and web crawler application
 
 - [crawler](./crawler)
     - A web crawler, scraping data from [591](https://rent.591.com.tw/)
@@ -44,4 +44,4 @@ docker-compose exec crawler python crawler/driver.py {taipei/new_taipei}
 [house591_spider](https://blog.jiatool.com/posts/house591_spider/)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](./LICENSE)
