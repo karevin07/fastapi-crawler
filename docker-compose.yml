@@ -1,5 +1,32 @@
 version: "3.5"
 services:
+    crawler:
+        image: fastapi-crawler
+        build: .
+        stdin_open: true
+        tty: true
+        environment:
+            - MONGO_HOST=${MONGO_HOST}
+            - MONGO_PORT=${MONGO_PORT}
+            - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+            - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+        volumes:
+            - ./crawler/:/home/fastapi/crawler/
+    fastapi:
+        image: fastapi-crawler
+        build: .
+        stdin_open: true
+        tty: true
+        environment:
+            - MONGO_HOST=${MONGO_HOST}
+            - MONGO_PORT=${MONGO_PORT}
+            - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+            - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./app/:/home/fastapi/app/
+        command: python app/main.py
     mongo:
         image: mongo:5.0.11
         environment:
