@@ -32,7 +32,7 @@ docker-compose exec crawler python crawler/driver.py {taipei/new_taipei}
 
 [fastapi](http://0.0.0.0:8000/docs#)
 
-![](https://i.imgur.com/cbDtVAO.png)
+![](https://i.imgur.com/eoeJZwG.png)
 
 
 ## Reference
