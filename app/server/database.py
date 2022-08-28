@@ -1,8 +1,15 @@
-from typing import List
-
 import motor.motor_asyncio
 
-MONGO_HOT_URL = "mongodb://root:123456@127.0.0.1:27017"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+mongo_host = os.environ["MONGO_HOST"]
+mongo_port = int(os.environ["MONGO_PORT"])
+user = os.environ["MONGO_ROOT_USER"]
+password = os.environ["MONGO_ROOT_PASSWORD"]
+
+MONGO_HOT_URL = f"mongodb://{user}:{password}@{mongo_host}:{mongo_port}"
 
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_HOT_URL)
 
@@ -24,10 +31,10 @@ def house_helper(house) -> dict:
 async def retrieve_houses(limit: int):
     houses = []
     if limit == -1:
-        async for house in collection.find().limit(limit):
+        async for house in collection.find():
             houses.append(house_helper(house))
     else:
-        async for house in collection.find():
+        async for house in collection.find().limit(limit):
             houses.append(house_helper(house))
     return houses
 
@@ -76,7 +83,7 @@ async def retrieve_house_by_role(role: bool, limit: int) -> list[dict]:
 
 
 # Retrieve houses with multiple conditions
-async def retrieve_house_by_multi_condition(conditions: dict) -> list[dict]:
+async def retrieve_house_data_by_optional_field(conditions: dict, limit: int) -> list[dict]:
     houses = []
     criteria = []
     for k, v in conditions.items():
@@ -86,18 +93,27 @@ async def retrieve_house_by_multi_condition(conditions: dict) -> list[dict]:
             c = {"region_id": v}
             criteria.append(c)
         elif k == "allow_gender":
-            c = {"allow_gender": k}
+            c = {"allow_gender": {"$in": [v, 3]}}
             criteria.append(c)
         elif k == "owner_gender":
             c = {"owner_gender": v}
             criteria.append(c)
-        elif k == "owner_last_name":
-            c = {"owner_last_name": f"/{v}/"}
+        elif k == "name":
+            c = {"name": {"$regex": v}}
+            criteria.append(c)
+        elif k == "role":
+            c = {"role": v}
             criteria.append(c)
 
     query = {
-        "$or": criteria
+        "$and": criteria
     }
-    async for house in collection.find(query):
-        houses.append(house_helper(house))
+
+    if limit == -1:
+        async for house in collection.find(query):
+            houses.append(house_helper(house))
+        return houses
+    else:
+        async for house in collection.find(query).limit(limit):
+            houses.append(house_helper(house))
     return houses
