@@ -43,21 +43,22 @@ def parse_detail(post_id, json_data):
     item_detail["post_id"] = post_id
     item_detail["title"] = json_data["title"]
     for breadcrumb in json_data["breadcrumb"]:
-        item_detail[breadcrumb["query"]] = breadcrumb["name"]
+        item_detail[breadcrumb["query"]] = breadcrumb["id"]
+        item_detail[f'{breadcrumb["query"]}_id'] = breadcrumb["name"]
     for info in json_data["info"]:
         item_detail[info["key"]] = info["value"]
     item_detail["address"] = json_data["positionRound"]["address"]
     item_detail["role_name"] = json_data["linkInfo"]["roleName"]
-    item_detail["role"] = json_data["linkInfo"]["role"]
+    item_detail["role"] = json_data["linkInfo"]["role"]  ## 屋主：1 代理人: 2 仲介:3
     item_detail["name"] = json_data["linkInfo"]["name"].replace(item_detail["role_name"], "").replace(": ", "").strip()
     item_detail["mobile"] = json_data["linkInfo"]["mobile"].replace("-", "")
     item_detail["price"] = int(json_data["price"].replace(",", ""))
     if item_detail["name"].endswith("先生"):
-        item_detail["owner"] = "1"
+        item_detail["owner"] = 1
     elif item_detail["name"].endswith("小姐"):
-        item_detail["owner"] = "2"
+        item_detail["owner"] = 2
     else:
-        item_detail["owner"] = "0"
+        item_detail["owner"] = 0
 
     try:
         house_rule = json_data["service"]["rule"]
