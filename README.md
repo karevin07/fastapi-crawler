@@ -9,13 +9,26 @@
 
 ## Installation
 
-getting started with docker-compose
+- copy .env file
+
+```bash
+cp example_env .env
+```
+
+- getting started with docker-compose
 
 ```bash
 docker-compose up -d
 ```
 
 ## Usage
+
+- crawler
+
+```bash
+## get taipei/new_taipei house data to mongodb from 591
+docker-compose exec crawler python crawler/driver.py {taipei/new_taipei}
+```
 
 [fastapi](http://0.0.0.0:8000/docs#)
 
