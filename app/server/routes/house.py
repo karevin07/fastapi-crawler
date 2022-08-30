@@ -18,8 +18,8 @@ router = APIRouter()
 
 
 @router.get("/", response_description="Houses retrieved")
-async def get_all_houses():
-    houses = await retrieve_houses(limit=Query(10, description="all = -1"))
+async def get_all_houses(limit=Query(10, description="all = -1")):
+    houses = await retrieve_houses(limit)
     if houses:
         return ResponseModel(houses, "House data retrieved successfully")
     return ResponseModel(houses, "Empty list returned")
