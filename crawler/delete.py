@@ -17,8 +17,8 @@ def main():
 
     for item_detail in item_detail_info:
         if item_detail not in item_list_info:
-            delete_item(item_detail["post_id"], db_name, detail_collection_name)
-            print("item detail delete {}".format(item_detail["post_id"]))
+            delete_item(item_detail, db_name, detail_collection_name)
+            print("item detail delete {}".format(item_detail))
         else:
             pass
 
