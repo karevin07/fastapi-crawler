@@ -1,4 +1,5 @@
 import time
+import random
 
 import requests
 from bs4 import BeautifulSoup
@@ -101,7 +102,7 @@ def main():
             item_detail = parse_detail(item["post_id"], jd)
             insert_item(item_detail, db_name, detail_collection_name)
             print("item detail insert {}".format(item["post_id"]))
-            time.sleep(0.1)
+            time.sleep(round(random.uniform(0, 1.5), 2))
         else:
             print("already exist {}".format(item["post_id"]))
 
